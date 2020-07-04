@@ -13,17 +13,18 @@
                 </div>
             </div>
             <div class="search-icon">
-                {{cateList}}
                 <span class="icon-search"></span>
             </div>
         </div>
         <!-- <component :is=currentCon></component> -->
-        <femaleCat>
+        <femaleCat v-show="currentConIndex === 1">
         </femaleCat>
+        <maleCat v-show="currentConIndex === 0"></maleCat>
     </div>
 </template>
 
 <script>
+import maleCat from '@/components/bookstore/maleCat.vue'
 import femaleCat from '@/components/bookstore/femaleCat.vue'
 import {bookStoreMixin} from '@/utils/mixin.js'
 export default {
@@ -47,49 +48,40 @@ export default {
                     title: '漫画',
                     name:'picture'
                 }],
-            isBigCateChange:false,
             currentBigCate:'male',
-            currentConIndex:0,
-            rankList:null,
-            subCateList:null
+            currentConIndex:0
         }
     },
     methods:{
         toggleCat(val) {
-            this.isBigCateChange = true
             this.currentConIndex = val
-            this.currentBigCate = this.bookList[val].name
-            this.getRankAndSubCate(this.currentBigCate)
-        },
-        handle() {
-            this.isBigCateChange = false
         },
         //获取排行榜类型
-        async getRank(bigCate) {
+        async getRank() {
             const res = await this.$http.get('/api/ranking/gender')
-            bigCate = bigCate === 'press' ? 'epub' : bigCate
             if (res.status === 200) {
-              this.rankList = res.data[bigCate]
+              this.setRankList(res.data)
             }
         },
         //获取子分类信息
-        async getSubCate(bigCate) {
+        async getSubCate() {
           const res = await this.$http.get('/api/cats/lv2/statistics')
           if (res.status === 200) {
-            this.subCateList = res.data[bigCate]
+            this.setCateList(res.data)
           }
         },
-        getRankAndSubCate(val) {
-            this.getRank(val)
-            this.getSubCate(val)
+        getRankAndSubCate() {
+            this.getRank()
+            this.getSubCate()
         }
     },
     components:{
-        femaleCat
+        femaleCat,
+        maleCat
     },
     mounted() {
-        console.log(this.cateList)
-        // this.getRankAndSubCate(this.currentBigCate)
+        this.getRankAndSubCate()
+        console.log(1)
     }
 }
 </script>
@@ -99,6 +91,8 @@ export default {
 .book-store {
     width:100%;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
     .top-nav {
         display: flex;
         height: px2rem(42);

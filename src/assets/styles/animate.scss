@@ -1,0 +1,15 @@
+@mixin move($name) {
+    $keyframesName: $name;
+    $animationTime: 1s;
+    $animationType: ease;
+    $animationIterator: infinite;
+    animation: #{$keyframesName} $animationTime $animationType $animationIterator;
+    @keyframes #{$keyframesName} {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+}

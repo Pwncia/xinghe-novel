@@ -2,12 +2,16 @@ import { mapGetters, mapActions } from 'vuex'
 export const bookStoreMixin = {
     computed: {
         ...mapGetters([
-            'cateList'
+            'cateList',
+            'rankList',
+            'isLoadShow'
         ])
     },
     methods: {
         ...mapActions([
-            'setCateList'
+            'setCateList',
+            'setRankList',
+            'setIsLoadShow'
         ])
     }
 }

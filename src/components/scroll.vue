@@ -6,7 +6,11 @@
 
 <script>
 export default {
-   
+   methods:{
+       scrollTo(x, y){
+         this.$refs.scroll.scrollTo(x, y)
+       }
+   }
 }
 </script>
 
