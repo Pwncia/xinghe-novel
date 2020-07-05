@@ -17,15 +17,21 @@
             </div>
         </div>
         <!-- <component :is=currentCon></component> -->
-        <femaleCat v-show="currentConIndex === 1">
+        <!-- <femaleCat v-show="currentConIndex === 1">
         </femaleCat>
         <maleCat v-show="currentConIndex === 0"></maleCat>
+        <pressCat v-show="currentConIndex === 2"></pressCat>
+        <comic-cate v-show="currentConIndex === 3"></comic-cate> -->
+        <male-cat :gender='currentBigCate'  ref="maleCat"></male-cat>
     </div>
 </template>
 
 <script>
 import maleCat from '@/components/bookstore/maleCat.vue'
-import femaleCat from '@/components/bookstore/femaleCat.vue'
+// import femaleCat from '@/components/bookstore/femaleCat.vue'
+// import pressCat from '@/components/bookstore/pressCate.vue'
+// import comicCate from '@/components/bookstore/comicCate.vue'
+// import cateBookList from '@/components/bookstore/bookListByCate.vue'
 import {bookStoreMixin} from '@/utils/mixin.js'
 export default {
     mixins:[bookStoreMixin],
@@ -55,6 +61,18 @@ export default {
     methods:{
         toggleCat(val) {
             this.currentConIndex = val
+            this.currentBigCate = this.bookList[val].name
+            console.log(this.currentBigCate)
+            this.freshCate()
+        },
+        //重置cate组件部分参数
+        freshCate(){
+            this.$refs.maleCat.subNum = -1
+            this.$refs.maleCat.bookListData = ''
+            this.$refs.maleCat.idFlag = false
+            this.$refs.maleCat.rankId._id = ''
+            this.$refs.maleCat.rankId.monthRank = ''
+            this.$refs.maleCat.rankId.totalRank = ''
         },
         //获取排行榜类型
         async getRank() {
@@ -76,12 +94,13 @@ export default {
         }
     },
     components:{
-        femaleCat,
+        // femaleCat,
         maleCat
+        // pressCat,
+        // comicCate
     },
     mounted() {
         this.getRankAndSubCate()
-        console.log(1)
     }
 }
 </script>

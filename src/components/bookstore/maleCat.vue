@@ -1,5 +1,5 @@
 <template>
-  <div class="male-cat" ref="maleCat">
+  <div class="male-cat">
       <div class="nav">
         <scroll>
             <div>
@@ -8,7 +8,7 @@
                   <span>全部分类</span>
                 </div>
                 <div class="rank-cat-item"
-                  v-for="(item,index) in rankList.male"
+                  v-for="(item,index) in rankList[rankCate]"
                   :key="index"
                   :class="{actived:subNum === index}"
                   @click="toggleRank(item._id, index)">
@@ -18,7 +18,7 @@
         </scroll>
       </div>
       <div class="content">
-          <sub-cat :cateList='cateList.male' v-show="subNum === -1"></sub-cat>
+          <sub-cat :cateList='cateList[gender]' v-show="subNum === -1"></sub-cat>
           <div class="rank-book-wrap"  v-show="subNum !== -1">
               <div class="option-bar">
                   <span v-for="(item, index) in optionData"
@@ -32,6 +32,7 @@
               </scroll>
           </div>
       </div>
+      <book-list-cate v-show="isCateBookShow" @hideBookListCate='hiddenCateBook'></book-list-cate>
   </div>
 </template>
 
@@ -40,11 +41,14 @@ import loadAnimate from '../loadAnimate'
 import scroll from '../scroll.vue'
 import subCat from './subCat.vue'
 import rankBook from './rankBookList'
+import bookListCate from './bookListByCate'
 import {bookStoreMixin} from '@/utils/mixin.js'
 export default {
+    props:['gender'],
     mixins:[bookStoreMixin],
     data(){
       return {
+        isCateBookShow:true,
         subNum:-1,
         bookListData:'',
         optionData:[
@@ -61,13 +65,23 @@ export default {
         idFlag:false
       }
     },
+    computed:{
+        rankCate(){
+          return this.gender === 'press' ? 'epub' : this.gender
+        }
+    },
     components:{
       scroll,
       subCat,
       rankBook,
-      loadAnimate
+      loadAnimate,
+      bookListCate
     },
     methods:{
+      hiddenCateBook() {
+        console.log(2)
+        this.isCateBookShow = false
+      },
       //切换榜单
       toggleRank(rankId, index) {
         this.optionId = 0
@@ -89,6 +103,9 @@ export default {
       },
       //获取排行榜书籍
       async getBookListByRankId(rankId) {
+        if (!rankId) {
+          return false
+        }
         this.setIsLoadShow(true)
         const res = await this.$http.get('/api/ranking/' + rankId)
         if (res.status === 200) {
