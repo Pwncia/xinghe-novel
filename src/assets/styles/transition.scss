@@ -5,10 +5,18 @@
 
 .slide-down-enter-to,
 .slide-down-leave {
-    height: 50vh;
+    height: 100%;
 }
 
-.slide-down-enter-active,
-.slide-down-leave-active {
+.fade-enter-active,
+.slide-down-enter-active {
     transition: all 0.2s linear;
+}
+
+.fade-enter {
+    opacity: 0;
+}
+
+.fade-enter-to {
+    opacity: 0.8;
 }

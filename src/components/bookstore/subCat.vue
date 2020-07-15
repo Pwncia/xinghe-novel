@@ -1,7 +1,9 @@
 <template>
     <div class="sub-cate">
         <div class="cate-item" v-for="(item,index) in cateList"
-        :key="index">
+        :key="index"
+        @click="handle(item.name)"
+        >
             <div class="cover">
                 <img :src="getCoverPath(item)" alt="">
             </div>
@@ -21,6 +23,9 @@ export default {
             let coverPath = item.bookCover[0]
             coverPath = coverPath.substr(7)
             return this.urlDecode(coverPath)
+        },
+        handle(major){
+            this.$emit('cateBookListShow', major)
         }
     },
     mounted(){

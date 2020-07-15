@@ -37,6 +37,7 @@ export default {
 .rank-book {
     height: 100%;
     width:100%;
+    padding-left:px2rem(1);
     .book-item-wrap {
         display: flex;
         align-items: center;
@@ -57,6 +58,7 @@ export default {
             .intro {
                 @include ellipsis;
                 font-size:px2rem(12);
+                line-height: px2rem(16);
                 margin:px2rem(8) 0;
                 color:#888;
                 letter-spacing: 1px;

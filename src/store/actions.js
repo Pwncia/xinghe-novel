@@ -7,6 +7,9 @@ const bookStoreActions = {
     },
     setIsLoadShow: ({ commit }, val) => {
         return commit('SET_ISLOADSHOW', val)
+    },
+    setMinorCate: ({ commit }, val) => {
+        return commit('SET_MINORCATE', val)
     }
 }
 export default bookStoreActions

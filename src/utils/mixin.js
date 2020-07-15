@@ -4,14 +4,16 @@ export const bookStoreMixin = {
         ...mapGetters([
             'cateList',
             'rankList',
-            'isLoadShow'
+            'isLoadShow',
+            'minorCate'
         ])
     },
     methods: {
         ...mapActions([
             'setCateList',
             'setRankList',
-            'setIsLoadShow'
+            'setIsLoadShow',
+            'setMinorCate'
         ])
     }
 }

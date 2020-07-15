@@ -12,26 +12,18 @@
                     {{item.title}}
                 </div>
             </div>
-            <div class="search-icon">
+            <div class="search-icon" @click="isBookSearchShow = true">
                 <span class="icon-search"></span>
             </div>
         </div>
-        <!-- <component :is=currentCon></component> -->
-        <!-- <femaleCat v-show="currentConIndex === 1">
-        </femaleCat>
-        <maleCat v-show="currentConIndex === 0"></maleCat>
-        <pressCat v-show="currentConIndex === 2"></pressCat>
-        <comic-cate v-show="currentConIndex === 3"></comic-cate> -->
         <male-cat :gender='currentBigCate'  ref="maleCat"></male-cat>
+        <book-search v-show="isBookSearchShow" @hide-book-search="hideBookSearch"></book-search>
     </div>
 </template>
 
 <script>
 import maleCat from '@/components/bookstore/maleCat.vue'
-// import femaleCat from '@/components/bookstore/femaleCat.vue'
-// import pressCat from '@/components/bookstore/pressCate.vue'
-// import comicCate from '@/components/bookstore/comicCate.vue'
-// import cateBookList from '@/components/bookstore/bookListByCate.vue'
+import bookSearch from '@/components/bookstore/bookSearch.vue'
 import {bookStoreMixin} from '@/utils/mixin.js'
 export default {
     mixins:[bookStoreMixin],
@@ -55,10 +47,14 @@ export default {
                     name:'picture'
                 }],
             currentBigCate:'male',
-            currentConIndex:0
+            currentConIndex:0,
+            isBookSearchShow:false
         }
     },
     methods:{
+        hideBookSearch(){
+            this.isBookSearchShow = false
+        },
         toggleCat(val) {
             this.currentConIndex = val
             this.currentBigCate = this.bookList[val].name
@@ -88,19 +84,27 @@ export default {
             this.setCateList(res.data)
           }
         },
-        getRankAndSubCate() {
+        //获取子分类的子分类
+        async getMinorCate(){
+            const res = await this.$http.get('/api/cats/lv2')
+            if (res.status === 200) {
+                this.setMinorCate(res.data)
+            }
+        },
+        getBookStoreData() {
             this.getRank()
             this.getSubCate()
+            this.getMinorCate()
         }
     },
     components:{
-        // femaleCat,
+        bookSearch,
         maleCat
         // pressCat,
         // comicCate
     },
     mounted() {
-        this.getRankAndSubCate()
+        this.getBookStoreData()
     }
 }
 </script>

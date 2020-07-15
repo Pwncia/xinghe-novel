@@ -18,7 +18,11 @@
         </scroll>
       </div>
       <div class="content">
-          <sub-cat :cateList='cateList[gender]' v-show="subNum === -1"></sub-cat>
+          <sub-cat 
+          :cateList='cateList[gender]' 
+          v-show="subNum === -1"
+          @cateBookListShow=showCateBookList>
+          </sub-cat>
           <div class="rank-book-wrap"  v-show="subNum !== -1">
               <div class="option-bar">
                   <span v-for="(item, index) in optionData"
@@ -32,7 +36,14 @@
               </scroll>
           </div>
       </div>
-      <book-list-cate v-show="isCateBookShow" @hideBookListCate='hiddenCateBook'></book-list-cate>
+      <book-list-cate 
+      v-show="isCateBookShow" 
+      @hideBookListCate='hiddenCateBook'
+      @query-booklist='queryBookList' 
+      @up-pull = 'upPullGetBook'
+      :bookData="cateBookData"
+      :queryInfo="queryInfo">
+      </book-list-cate>
   </div>
 </template>
 
@@ -48,9 +59,10 @@ export default {
     mixins:[bookStoreMixin],
     data(){
       return {
-        isCateBookShow:true,
+        isCateBookShow:false,
         subNum:-1,
         bookListData:'',
+        cateBookData:'',
         optionData:[
           {title:'周榜', name:'_id'},
           {title:'月榜', name:'monthRank'},
@@ -62,7 +74,17 @@ export default {
           totalRank:''
         },
         //同一榜单第一次获取
-        idFlag:false
+        idFlag:false,
+        //根据分类请求参数
+        queryInfo: {
+          gender:this.gender,
+          type:'hot',
+          major:this.major,
+          start:0,
+          limit:10,
+          minor:''
+        },
+        pullFlag:false
       }
     },
     computed:{
@@ -78,9 +100,45 @@ export default {
       bookListCate
     },
     methods:{
+      //根据分类请求小说列表
+        async getBookList() {
+            const res = await this.$http.get('/api/book/by-categories', {params:this.queryInfo})
+            if (res.status === 200) {
+                if (this.pullFlag) {
+                  this.cateBookData.books = [...this.cateBookData.books, ...res.data.books]
+                }
+                else {
+                 this.cateBookData = res.data
+                }
+            }
+            this.pullFlag = false  
+            console.log(this.cateBookData)
+            console.log(res)
+        },
+        //更改请求参数并重新请求小说列表
+        queryBookList(mins, type) {
+              this.queryInfo.minor = mins
+              this.queryInfo.type = type
+              this.pullFlag = false
+              this.getBookList()
+        },
+        upPullGetBook() {
+            this.queryInfo.start += this.queryInfo.limit
+            this.pullFlag = true
+            this.getBookList()
+        },
+      showCateBookList(major) {
+        this.isCateBookShow = true
+        this.queryInfo.major = major
+        this.getBookList(this.pullFlag)
+      },
       hiddenCateBook() {
-        console.log(2)
         this.isCateBookShow = false
+        //重置请求参数
+        this.queryInfo.type = 'hot'
+        this.queryInfo.minor = ''
+        this.queryInfo.start = 0
+        this.queryInfo.limit = 10
       },
       //切换榜单
       toggleRank(rankId, index) {
@@ -119,6 +177,11 @@ export default {
       }
     },
     mounted() {
+    },
+    watch: {
+      gender:function(newVal, old) {
+        this.queryInfo.gender = newVal
+      }
     }
 }
 </script>
