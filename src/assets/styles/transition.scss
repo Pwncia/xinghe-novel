@@ -8,6 +8,7 @@
     height: 100%;
 }
 
+.slide-left-leave-to,
 .fade-enter-active,
 .slide-down-enter-active {
     transition: all 0.2s linear;
@@ -19,4 +20,12 @@
 
 .fade-enter-to {
     opacity: 0.8;
+}
+
+.slide-left-leave {
+    transform: translate(0, 0);
+}
+
+.slide-left-leave-to {
+    transform: translate(100%, 0);
 }

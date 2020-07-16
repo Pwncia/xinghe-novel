@@ -11,6 +11,11 @@ const routes = [{
         path: '/bookstore',
         component: () =>
             import ('../views/bookStore.vue')
+    },
+    {
+        path: '/booksearch',
+        component: () =>
+            import ('../views/bookSearch.vue')
     }
 ]
 

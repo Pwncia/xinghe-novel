@@ -12,18 +12,20 @@
                     {{item.title}}
                 </div>
             </div>
-            <div class="search-icon" @click="isBookSearchShow = true">
+            <div class="search-icon" @click="goBookSearch">
                 <span class="icon-search"></span>
             </div>
         </div>
         <male-cat :gender='currentBigCate'  ref="maleCat"></male-cat>
-        <book-search v-show="isBookSearchShow" @hide-book-search="hideBookSearch"></book-search>
+        <!-- <transition name="slide-left">
+            <book-search :isBookSearchShow="isBookSearchShow" v-show="isBookSearchShow" @hide-book-search="hideBookSearch"></book-search>
+        </transition> -->
     </div>
 </template>
 
 <script>
 import maleCat from '@/components/bookstore/maleCat.vue'
-import bookSearch from '@/components/bookstore/bookSearch.vue'
+// import bookSearch from '@/components/bookstore/bookSearch.vue'
 import {bookStoreMixin} from '@/utils/mixin.js'
 export default {
     mixins:[bookStoreMixin],
@@ -60,6 +62,9 @@ export default {
             this.currentBigCate = this.bookList[val].name
             console.log(this.currentBigCate)
             this.freshCate()
+        },
+        goBookSearch() {
+            this.$router.push('/booksearch')
         },
         //重置cate组件部分参数
         freshCate(){
@@ -98,7 +103,7 @@ export default {
         }
     },
     components:{
-        bookSearch,
+        // bookSearch,
         maleCat
         // pressCat,
         // comicCate

@@ -4,7 +4,8 @@ const bookStore = {
         cateList: '',
         rankList: '',
         isLoadShow: '',
-        minorCate: ''
+        minorCate: '',
+        isLoadAnimateShow: false
     },
     mutations: {
         //更该分类列表
@@ -20,6 +21,9 @@ const bookStore = {
         },
         SET_MINORCATE: (state, newVal) => {
             state.minorCate = newVal
+        },
+        SET_ISLOADANIMATESHOW: (state, newVal) => {
+            state.isLoadAnimateShow = newVal
         }
     }
 }

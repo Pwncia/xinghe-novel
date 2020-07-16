@@ -14,6 +14,11 @@ Vue.prototype.urlDecode = urlDecode
 
 Vue.config.productionTip = false
 
+Vue.directive('focus', {
+    update: function(el) {
+        el.focus()
+    }
+})
 new Vue({
     router,
     store,
