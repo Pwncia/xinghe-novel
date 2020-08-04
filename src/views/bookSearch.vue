@@ -23,12 +23,13 @@
             :searchMostArr="searchMostArr"
             :searchHistoryArr="searchHistoryArr"
             v-show="isLoaded"></book-search-tab>
-            <div class="load-animate" v-show="!isLoaded">
+            <div class="load-animate" v-show="!isLoaded || isSearching">
                 <div class="animate-wrap">
                     <load-animate></load-animate>
                 </div>
             </div>
-            <word-auto v-show="autoCompWords.length !== 0" :keywords="autoCompWords"></word-auto>
+            <word-auto v-show="autoCompWords.length !== 0" :keywords="autoCompWords" @select-auto-word="clickAutoWord"></word-auto>
+            <book-search-res ref="bookSearchRes" v-show="isSearchResShow" :searchResList="searchResList"></book-search-res>
         </div>
     </div>
     </transition>
@@ -39,6 +40,7 @@ import {setSearchHistory, getSearchHistory, removeStorageItem} from '@/utils/loc
 import bookSearchTab from '@/components/booksearch/bookSearchTab'
 import loadAnimate from '@/components/loadAnimate.vue'
 import wordAuto from '@/components/booksearch/searchWordAuto'
+import bookSearchRes from '@/components/booksearch/bookSearchRes.vue'
 export default {
     data() {
         return {
@@ -52,7 +54,9 @@ export default {
             autoCompWords:'',
             searchResList:'',
             //直接搜索，不自动补充
-            flag:false
+            flag:false,
+            isSearching:false,
+            isSearchResShow:false
         }
     },
     methods:{
@@ -70,6 +74,7 @@ export default {
         },
         //模糊搜索
         async getFuzzySearch(word) {
+            this.isSearching = true
             const res = await this.$http.get('/api/book/fuzzy-search', {
                 params:{
                     query:word
@@ -79,6 +84,7 @@ export default {
                 this.searchResList = res.data.books
             }
             console.log(res)
+            this.isSearching = false
         },
         async getAutoComplete() {
             const res = await this.$http.get('/api/book/auto-complete', {
@@ -95,6 +101,11 @@ export default {
         deleteSearchWord() {
             this.searchWords = ''
             this.flag = false
+            this.isSearchResShow = false
+            //重新获取搜索热词
+            this.isLoaded = false
+            this.getSearchHotWords()
+            this.$refs.bookSearchRes.scrollRefresh()
         },
         //点击搜索
         handleSearch() {
@@ -104,6 +115,8 @@ export default {
             }
             setSearchHistory(this.searchWords)
             this.getHistorySearchWords()
+            this.isSearchResShow = true
+            this.getFuzzySearch(this.searchWords)
         },
         //获取搜索历史
         getHistorySearchWords(){
@@ -122,6 +135,14 @@ export default {
             //更新搜索历史
             this.getHistorySearchWords()
             this.getFuzzySearch(word)
+            this.isSearchResShow = true
+        },
+        //点击自动补充的词
+        clickAutoWord(word) {
+            this.searchWords = word
+            this.flag = true
+            this.getFuzzySearch(word)
+            this.isSearchResShow = true
         }
     },
     watch:{
@@ -131,7 +152,7 @@ export default {
             }
             else {
                 this.isCloseShow = false
-                this.autoCompWords = ''
+                this.autoCompWords = ' '
             }
             if (val.trim() !== '' && this.flag === false) {
                 this.getAutoComplete()
@@ -144,7 +165,8 @@ export default {
     components:{
         bookSearchTab,
         loadAnimate,
-        wordAuto
+        wordAuto,
+        bookSearchRes
     },
     mounted() {
         this.getSearchHotWords()
@@ -217,10 +239,12 @@ export default {
         height:calc(100vh - #{px2rem(48)});
         // background-color: pink;
         .load-animate {
+            position:absolute;
+            top:0;
+            left: 0;
             width:100%;
             height: 100%;
             .animate-wrap {
-                position: relative;
                 width: 100%;
                 height: px2rem(40);
             }

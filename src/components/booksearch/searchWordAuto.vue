@@ -1,7 +1,7 @@
 <template>
     <div class="search-word-auto">
         <scroll>
-            <div class="word-item" v-for="(item, index) in keywords" :key="index">
+            <div class="word-item" v-for="(item, index) in keywords" :key="index" @click="selectAutoWord(item)">
                 <span class="icon-search"></span>
                 <span>{{item}}</span>
             </div>
@@ -13,6 +13,11 @@
 import scroll from '../scroll'
 export default {
     props:['keywords'],
+    methods:{
+        selectAutoWord(word) {
+            this.$emit('select-auto-word', word)
+        }
+    },
     components:{
         scroll
     }

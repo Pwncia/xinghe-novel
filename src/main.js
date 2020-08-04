@@ -5,10 +5,11 @@ import store from './store'
 import axios from 'axios'
 import './assets/styles/global.scss'
 import './assets/styles/icon.css'
-import MintUI from 'mint-ui'
+import swiper from 'vue-awesome-swiper'
 import urlDecode from 'urldecode'
+import 'swiper/swiper-bundle'
 
-Vue.use(MintUI)
+Vue.use(swiper)
 Vue.prototype.$http = axios
 Vue.prototype.urlDecode = urlDecode
 

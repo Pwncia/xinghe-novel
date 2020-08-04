@@ -2,7 +2,7 @@
   <div class="rank-book">
       <!-- <scrollWrap></scrollWrap> -->
       <div class="book-item-wrap" v-for="(item, index) in bookListData.books"
-      :key="index">
+      :key="index" @click="goBookDetail(item._id)">
           <div class="book-cover">
               <img :src="getCoverPath(item.cover)">
           </div>
@@ -24,6 +24,9 @@ export default {
     componets:{
     },
     methods:{
+        goBookDetail(bookId){
+            this.$router.push('/bookdetail/' + bookId)
+        },
         getCoverPath(str) {
             str = str.substr(7)
             return this.urlDecode(str)

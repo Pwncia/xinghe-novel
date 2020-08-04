@@ -18,7 +18,8 @@
                   <div class="book-list-wrap">
                     <div class="book-item"
                     v-for="(item, index) in bookData.books"
-                    :key="index">
+                    :key="index"
+                    @click=goBookDetail(item._id)>
                         <div class="cover">
                             <img :src="getCoverPath(item.cover)" alt="">
                         </div>
@@ -113,6 +114,10 @@ export default {
             this.minor = mins || '全部'
             this.type = title || this.type
             this.$refs.bookListScroll.scrollTo(0, 0)
+        },
+        //书籍详情页
+        goBookDetail(id) {
+            this.$router.push('/bookdetail/' + id)
         }
 
     },
