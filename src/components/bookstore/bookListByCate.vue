@@ -14,7 +14,7 @@
            
             </div>
             <div class="bookList-content">
-              <scroll @onScroll="handleScroll" ref="bookListScroll">
+              <scroll @onScroll="handleScroll" ref="bookListScroll" :hideSlideBar="true">
                   <div class="book-list-wrap">
                     <div class="book-item"
                     v-for="(item, index) in bookData.books"

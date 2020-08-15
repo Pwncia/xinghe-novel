@@ -11,6 +11,13 @@ module.exports = {
                 pathRewrite: {
                     '^/api': ''
                 }
+            },
+            '/chapter': {
+                target: 'http://chapterup.zhuishushenqi.com',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/chapter': ''
+                }
             }
         }
     }

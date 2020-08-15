@@ -1,4 +1,4 @@
-const bookStoreActions = {
+const actions = {
     setCateList: ({ commit }, newVal) => {
         return commit('SET_CATELIST', newVal)
     },
@@ -10,6 +10,14 @@ const bookStoreActions = {
     },
     setMinorCate: ({ commit }, val) => {
         return commit('SET_MINORCATE', val)
+    },
+    //阅读器actions
+    setIsChapterCategoryShow: ({ commit }, val) => {
+        return commit('SET_ISCHAPTERCATEGORYSHOW', val)
+    },
+    setCurrentChapter: ({ commit }, val) => {
+        return commit('SET_CURRENTCHAPTER', val)
     }
 }
-export default bookStoreActions
+
+export default actions

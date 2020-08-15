@@ -7,11 +7,13 @@ import './assets/styles/global.scss'
 import './assets/styles/icon.css'
 import swiper from 'vue-awesome-swiper'
 import urlDecode from 'urldecode'
+import urlEncode from 'urlencode'
 import 'swiper/swiper-bundle'
 
 Vue.use(swiper)
 Vue.prototype.$http = axios
 Vue.prototype.urlDecode = urlDecode
+Vue.prototype.urlEncode = urlEncode
 
 Vue.config.productionTip = false
 

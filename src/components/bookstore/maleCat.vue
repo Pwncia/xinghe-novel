@@ -1,7 +1,7 @@
 <template>
   <div class="male-cat">
       <div class="nav">
-        <scroll>
+        <scroll :hideSlideBar="true">
             <div>
                 <div class="all-cat" :class="{actived:subNum === -1}"
                 @click="toggleRank(0,-1)">
@@ -30,7 +30,7 @@
                   :class="{actived:optionId === index}"
                   @click="changeBookListOrder(item.name, index)">{{item.title}}</span>
               </div>
-              <scroll ref="rankBook">
+              <scroll ref="rankBook" :hideSlideBar="true">
                 <load-animate v-show="isLoadShow"></load-animate>
                 <rank-book :bookListData='bookListData'></rank-book>
               </scroll>

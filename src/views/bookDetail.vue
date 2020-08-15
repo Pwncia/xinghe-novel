@@ -53,7 +53,7 @@
                             </div>
                             <div class="last-chapter">
                             <div class="left">目录</div>
-                            <div class="right">
+                            <div class="right" @click=showChapterCategory>
                                 <div class="update">{{updated}}</div>
                                 <div class="chapter">{{bookInfo.lastChapter}}</div>
                                 <span class="icon-forward"></span>
@@ -61,7 +61,7 @@
                             </div>
                         </div>
                         <div class="short-review">
-                            <short-review :reviewsObj="reviewsObj"></short-review>
+                            <short-review :reviewsObj="reviewsObj" @show-all-reviews="allReviewsShow"></short-review>
                         </div>
                         <div class="copyright">
                             <div class="title">图书信息</div>
@@ -77,7 +77,10 @@
                 <span class="book-title" v-show="!isTransparent">{{bookInfo.title}}</span>
             </div>
             <div class="right">
-                <span class="icon-heart"></span>
+                <div class="heart-wrap" @click="toggleHeart">
+                    <span class="icon-heart-full" v-if="isHeartFull"></span>
+                    <span class="icon-heart" v-else></span>
+                </div>
                 <span class="icon-community"></span>
                 <span class="icon-more"></span>
             </div>
@@ -104,6 +107,11 @@
                 <span>下载</span>
             </div>
         </div>
+        <message-box ref="messageBox" :msg="msg"></message-box>
+        <transition name="slide-left">
+            <all-reviews :reviewsObj="reviewsObj" v-show="isAllReviewsShow" @all-reviews-hide="hideAllReviews"></all-reviews>
+        </transition>
+        <chapter-category @go-bookreader="goBookReader"></chapter-category>
     </div>
 </template>
 
@@ -112,7 +120,14 @@ import loadAnimate from '../components/loadAnimate'
 import scroll from '../components/scroll'
 import shortReview from '../components/bookdetail/shortReview'
 import {updatedTime} from '../utils/utils'
+import messageBox from '../components/messageBox'
+import allReviews from '../components/bookdetail/allReview'
+import chapterCategory from '../components/chapterCategory'
+import {setWantReadList, getWantReadList, deleteWantRead, setChapterLink} from '../utils/localStorage'
+import {bookReaderMixin} from '../utils/mixin'
+
 export default {
+    mixins:[bookReaderMixin],
     data() {
         return {
             isLoaded:false,
@@ -123,10 +138,40 @@ export default {
             starObjArr:[],
             isFold:true,
             updated:'',
-            reviewsObj:''
+            reviewsObj:'',
+            isHeartFull:'',
+            msg:'',
+            isAllReviewsShow:false
         }
     },
     methods:{
+        goBookReader(link) {
+            setChapterLink(this.$route.params.bookId, link)
+            this.$router.push('/bookreader/' + this.$route.params.bookId)
+        },
+        showChapterCategory() {
+            this.setIsChapterCategoryShow(true)
+        },
+        allReviewsShow(){
+            this.isAllReviewsShow = true
+        },
+        hideAllReviews(){
+            this.isAllReviewsShow = false
+        },
+        toggleHeart(){
+            this.$refs.messageBox.hidden()
+            if (this.isHeartFull) {
+                this.msg = '已从想读清单中移除'
+                this.$refs.messageBox.show()
+                deleteWantRead(this.$route.params.bookId)
+            }
+            else {
+                this.msg = '已标记为想读'
+                this.$refs.messageBox.show()
+                setWantReadList(this.$route.params.bookId)
+            }
+            this.isHeartFull = !this.isHeartFull
+        },
         onScroll(e) {
             if (e.target.scrollTop > 0) {
                 this.isTransparent = false
@@ -158,8 +203,7 @@ export default {
                     params:{
                         book:this.$route.params.bookId,
                         sort:'comment-count',
-                        start:0,
-                        limit:3
+                        start:0
                     }
                 }).then(res => {
                     if (res.status === 200) {
@@ -183,6 +227,10 @@ export default {
                 this.reviewsObj = res
                 console.log(res)
             })
+            let readList = getWantReadList()
+            if (readList) {
+                this.isHeartFull = readList.some(item => item === this.$route.params.bookId)
+            }
         },
         setStarObj(){
             let full = Math.floor(this.bookInfo.rating.score / 2)
@@ -229,7 +277,10 @@ export default {
     components:{
         loadAnimate,
         scroll,
-        shortReview
+        shortReview,
+        messageBox,
+        allReviews,
+        chapterCategory
     },
     created(){
         // this.getBookDetail()
@@ -267,6 +318,7 @@ export default {
                     left:0;
                     z-index:99;
                     min-height:100%;
+                    width:100%;
                     background-image: linear-gradient(rgba(255,255,255,0.9),rgba(255,255,255,1) px2rem(200),#eee px2rem(200),#eee);
                     .book-info  {
                         padding: px2rem(48) px2rem(15) 0;
@@ -443,7 +495,12 @@ export default {
                 }
             }
             .right {
+                display: flex;
+                align-items: center;
                 padding-right: px2rem(6);
+                .heart-wrap {
+                    margin-right:px2rem(12);
+                }
                 span {
                     margin-right:px2rem(12);
                     color:#444;

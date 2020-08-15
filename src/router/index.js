@@ -21,6 +21,11 @@ const routes = [{
         path: '/bookdetail/:bookId',
         component: () =>
             import ('../views/bookDetail.vue')
+    },
+    {
+        path: '/bookReader/:bookId',
+        component: () =>
+            import ('../views/bookReader.vue')
     }
 ]
 

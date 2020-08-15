@@ -10,9 +10,9 @@ $radio:375 / 10;
 }
 
 @mixin scroll {
-    overflow-x: hidden;
-    overflow-y: scroll;
-    // -webkit-overflow-scrolling: touch;
+    // overflow-x: hidden;
+    // overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     &::-webkit-scrollbar {
         display: none;
     }

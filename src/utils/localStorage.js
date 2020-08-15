@@ -38,3 +38,46 @@ export function setSearchHistory(val) {
 export function getSearchHistory() {
     return getStorageItem('search-history')
 }
+
+//保存想读书本id
+export function setWantReadList(bookId) {
+    let readList = getStorageItem('want-read-list')
+    if (!readList) {
+        readList = []
+    } else {
+        let index = readList.indexOf(bookId)
+        if (index !== -1) {
+            return false
+        }
+    }
+    readList.push(bookId)
+    return setStorageItem('want-read-list', readList)
+}
+
+//获取想读书本
+export function getWantReadList() {
+    return getStorageItem('want-read-list')
+}
+
+//移除想读书本
+export function deleteWantRead(bookId) {
+    let readList = getStorageItem('want-read-list')
+    console.log(readList)
+    let newArr = readList.filter(item => item !== bookId)
+    return setStorageItem('want-read-list', newArr)
+}
+
+//保存当前书籍阅读章节记录
+export function setChapterLink(bookId, currentChapter) {
+    let chapterLink = getStorageItem('chapter-link')
+    if (!chapterLink) {
+        chapterLink = {}
+    }
+    chapterLink[bookId] = currentChapter
+    return setStorageItem('chapter-link', chapterLink)
+}
+
+//获取当前书籍阅读记录
+export function getChapterLink() {
+    return getStorageItem('chapter-link')
+}

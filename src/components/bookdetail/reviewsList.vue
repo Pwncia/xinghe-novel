@@ -1,13 +1,6 @@
 <template>
     <div class="review-wrap">
-        <div class="head">
-            <div class="title">热门短评</div>
-            <div class="more" @click="showAllReviews">
-                <span>查看更多 {{totalReviews}}</span>
-                <span class="icon-forward"></span>
-            </div>
-        </div>
-        <div class="review-item" v-for="(item, index) in reviewsList" :key="index">
+        <div class="review-item" v-for="(item, index) in reviewsObj.reviews" :key="index">
             <div class="author-wrap">
                 <div class="avatar">
                     <img :src="avatarPath(item.author.avatar)" alt="">
@@ -34,26 +27,7 @@ export default {
     methods:{
         avatarPath(str) {
             return 'http://statics.zhuishushenqi.com/' + str
-        },
-        showAllReviews() {
-            this.$emit('show-all-reviews')
         }
-    },
-    computed:{
-        totalReviews(){
-            return '(' + this.reviewsObj.total + '条)'
-        },
-        reviewsList() {
-            if (this.reviewsObj.reviews) {
-                return this.reviewsObj.reviews.slice(0, 3)
-            }
-            else {
-                return []
-            }
-        }
-    },
-    mounted() {
-        console.log(this.reviewsList)
     }
 }
 </script>
@@ -66,24 +40,6 @@ export default {
         padding:0 px2rem(15);
         box-sizing:border-box;
         overflow: hidden;
-        .head {
-            display: flex;
-            justify-content:space-between;
-            align-items:center;
-            height:px2rem(40);
-            font-size: px2rem(16);
-            color:#333;
-            .title {
-                font-weight:700;
-            }
-            .more {
-                @include center;
-                font-size:px2rem(10);
-                span:first-child {
-                    margin-right:px2rem(5);
-                };
-            }
-        }
         .review-item {
             font-size:px2rem(12);
             border-top:px2rem(0.5) solid #eee;

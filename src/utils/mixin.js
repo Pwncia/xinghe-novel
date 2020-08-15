@@ -17,3 +17,16 @@ export const bookStoreMixin = {
         ])
     }
 }
+
+export const bookReaderMixin = {
+    computed: {
+        ...mapGetters([
+            'isChapterCategoryShow'
+        ])
+    },
+    methods: {
+        ...mapActions([
+            'setIsChapterCategoryShow'
+        ])
+    }
+}
