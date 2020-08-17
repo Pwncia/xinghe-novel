@@ -123,7 +123,7 @@ export default {
     flex-direction: column;
     .top-nav {
         display: flex;
-        height: px2rem(42);
+        height: px2rem(48);
         border-bottom: px2rem(1) solid #eee;
         .nav-item-wrap {
             display: flex;

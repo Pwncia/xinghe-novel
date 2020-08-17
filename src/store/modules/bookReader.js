@@ -1,10 +1,10 @@
 const bookReader = {
     state: {
-        isChapterCategoryShow: false
+        isChapterCatelogueShow: false
     },
     mutations: {
-        SET_ISCHAPTERCATEGORYSHOW: (state, val) => {
-            state.isChapterCategoryShow = val
+        SET_ISCHAPTERCATELOGUESHOW: (state, val) => {
+            state.isChapterCatelogueShow = val
         }
     }
 }

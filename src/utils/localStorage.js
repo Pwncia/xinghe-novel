@@ -81,3 +81,17 @@ export function setChapterLink(bookId, currentChapter) {
 export function getChapterLink() {
     return getStorageItem('chapter-link')
 }
+//保存阅读器相关设置
+export function saveReaderSetting(key, value) {
+    let readerSetting = getStorageItem('reader-setting')
+    if (!readerSetting) {
+        readerSetting = {}
+    }
+    readerSetting[key] = value
+    return setStorageItem('reader-setting', readerSetting)
+}
+
+//获取阅读器相关设置
+export function getReaderSetting() {
+    return getStorageItem('reader-setting')
+}

@@ -53,7 +53,7 @@
                             </div>
                             <div class="last-chapter">
                             <div class="left">目录</div>
-                            <div class="right" @click=showChapterCategory>
+                            <div class="right" @click=showChapterCatelogue>
                                 <div class="update">{{updated}}</div>
                                 <div class="chapter">{{bookInfo.lastChapter}}</div>
                                 <span class="icon-forward"></span>
@@ -111,7 +111,7 @@
         <transition name="slide-left">
             <all-reviews :reviewsObj="reviewsObj" v-show="isAllReviewsShow" @all-reviews-hide="hideAllReviews"></all-reviews>
         </transition>
-        <chapter-category @go-bookreader="goBookReader"></chapter-category>
+        <chapter-catelogue @go-bookreader="goBookReader" :chapterLink="chapterLink"></chapter-catelogue>
     </div>
 </template>
 
@@ -122,8 +122,8 @@ import shortReview from '../components/bookdetail/shortReview'
 import {updatedTime} from '../utils/utils'
 import messageBox from '../components/messageBox'
 import allReviews from '../components/bookdetail/allReview'
-import chapterCategory from '../components/chapterCategory'
-import {setWantReadList, getWantReadList, deleteWantRead, setChapterLink} from '../utils/localStorage'
+import chapterCatelogue from '../components/chapterCatelogue'
+import {setWantReadList, getWantReadList, deleteWantRead, setChapterLink, getChapterLink} from '../utils/localStorage'
 import {bookReaderMixin} from '../utils/mixin'
 
 export default {
@@ -141,7 +141,8 @@ export default {
             reviewsObj:'',
             isHeartFull:'',
             msg:'',
-            isAllReviewsShow:false
+            isAllReviewsShow:false,
+            chapterLink:''
         }
     },
     methods:{
@@ -149,8 +150,8 @@ export default {
             setChapterLink(this.$route.params.bookId, link)
             this.$router.push('/bookreader/' + this.$route.params.bookId)
         },
-        showChapterCategory() {
-            this.setIsChapterCategoryShow(true)
+        showChapterCatelogue() {
+            this.setIsChapterCatelogueShow(true)
         },
         allReviewsShow(){
             this.isAllReviewsShow = true
@@ -231,6 +232,7 @@ export default {
             if (readList) {
                 this.isHeartFull = readList.some(item => item === this.$route.params.bookId)
             }
+            this.chapterLink = getChapterLink()[this.$route.params.bookId]
         },
         setStarObj(){
             let full = Math.floor(this.bookInfo.rating.score / 2)
@@ -280,7 +282,7 @@ export default {
         shortReview,
         messageBox,
         allReviews,
-        chapterCategory
+        chapterCatelogue
     },
     created(){
         // this.getBookDetail()

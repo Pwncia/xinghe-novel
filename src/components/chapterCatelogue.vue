@@ -1,15 +1,15 @@
 <template>
     <transition name="fade">
-        <div class="chapter-category" @click="handleClick" v-show="isChapterCategoryShow">
+        <div class="chapter-catelogue" @click.stop="handleClick" v-show="isChapterCatelogueShow">
             <transition name="slide-right">
-                <div class="category-wrap" ref="category" v-show="isChapterCategoryShow">
+                <div class="catelogue-wrap" :style="theme" ref="catelogue" v-show="isChapterCatelogueShow">
                     <div class="title">目录</div>
                         <div class="content">
                             <div class="load-animate-wrap" v-show="!isLoaded">
                                 <load-animate></load-animate>
                             </div>
                             <scroll>
-                                <div class="chapter-item" @click.stop="goBookReader(item.link)" :class="{current:item.id === chapterId}" v-for="(item, index) in chapterArr" :key="index">{{item.title}}</div>
+                                <div class="chapter-item" @click.stop="goBookReader(item.link)" :class="{current:item.link === chapterLink}" v-for="(item, index) in chapterArr" :key="index">{{item.title}}</div>
                             </scroll>
                         </div>
                 </div>
@@ -23,7 +23,7 @@ import loadAnimate from './loadAnimate'
 import scroll from './scroll'
 import {bookReaderMixin} from '../utils/mixin'
 export default {
-    props:['chapterId'],
+    props:['chapterLink', 'theme'],
     mixins:[bookReaderMixin],
     data(){
         return {
@@ -33,19 +33,19 @@ export default {
     },
     methods:{
         goBookReader(link) {
-            this.hideChapterCategory()
+            this.hideChapterCatelogue()
             this.$emit('go-bookreader', link)
         },
-        hideChapterCategory(){
-                this.setIsChapterCategoryShow(false)
+        hideChapterCatelogue(){
+                this.setIsChapterCatelogueShow(false)
         },
         handleClick(e){
-            if (e.clientX >= this.$refs.category.offsetLeft + this.$refs.category.offsetWidth) {
-                this.hideChapterCategory()
+            if (e.clientX >= this.$refs.catelogue.offsetLeft + this.$refs.catelogue.offsetWidth) {
+                this.hideChapterCatelogue()
             }
             return false
         },
-        async getChapterCategory(){
+        async getChapterCatelogue(){
             const res = await this.$http.get('/api/atoc', {
                 params:{
                     view:'summary',
@@ -73,14 +73,14 @@ export default {
         scroll
     },
     created() {
-        this.getChapterCategory()
+        this.getChapterCatelogue()
     }
 }
 </script>
 
 <style lang="scss" scoped>
 @import '../assets/styles/global.scss';
-.chapter-category {
+.chapter-catelogue {
     position:absolute;
     top:0;
     left:0;
@@ -90,7 +90,7 @@ export default {
     background-color: rgba(0,0,0,.6);
     padding:px2rem(10) 0 px2rem(10) px2rem(10);
     box-sizing:border-box;
-    .category-wrap {
+    .catelogue-wrap {
         display: flex;
         flex-direction: column;
         width:90%;

@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?ffop53');
-  src:  url('fonts/icomoon.eot?ffop53#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?ffop53') format('truetype'),
-    url('fonts/icomoon.woff?ffop53') format('woff'),
-    url('fonts/icomoon.svg?ffop53#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?o5yywo');
+  src:  url('fonts/icomoon.eot?o5yywo#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?o5yywo') format('truetype'),
+    url('fonts/icomoon.woff?o5yywo') format('woff'),
+    url('fonts/icomoon.svg?o5yywo#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,30 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-A3:before {
+  content: "\e936";
+}
+.icon-A2:before {
+  content: "\e937";
+}
+.icon-space1:before {
+  content: "\e933";
+}
+.icon-space2:before {
+  content: "\e934";
+}
+.icon-space3:before {
+  content: "\e935";
+}
+.icon-daytime:before {
+  content: "\e931";
+}
+.icon-night:before {
+  content: "\e932";
+}
+.icon-user:before {
+  content: "\e930";
+}
 .icon-more:before {
   content: "\e914";
 }

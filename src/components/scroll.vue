@@ -1,5 +1,5 @@
 <template>
-  <div class="scroll-wrap" :class="{'scroll-x':scrollDirection === 0,'scroll-y':scrollDirection === 1}" ref="scroll" @scroll="handleScroll">
+  <div class="scroll-wrap" :class="{'scroll-x':scrollDirection === 0,'scroll-y':scrollDirection == undefined || scrollDirection === 1}" ref="scroll" @scroll="handleScroll">
       <slot></slot>
   </div>
 </template>

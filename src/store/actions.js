@@ -12,8 +12,8 @@ const actions = {
         return commit('SET_MINORCATE', val)
     },
     //阅读器actions
-    setIsChapterCategoryShow: ({ commit }, val) => {
-        return commit('SET_ISCHAPTERCATEGORYSHOW', val)
+    setIsChapterCatelogueShow: ({ commit }, val) => {
+        return commit('SET_ISCHAPTERCATELOGUESHOW', val)
     },
     setCurrentChapter: ({ commit }, val) => {
         return commit('SET_CURRENTCHAPTER', val)

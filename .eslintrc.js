@@ -27,7 +27,8 @@ module.exports = {
         'func-call-spacing': 'off',
         'space-inp-parens': 'off',
         'prefer-const': 0,
-        'quote-props': 'off'
+        'quote-props': 'off',
+        'eqeqeq': 0
     },
     parserOptions: {
         parser: 'babel-eslint'

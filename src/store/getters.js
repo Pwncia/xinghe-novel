@@ -3,7 +3,7 @@ const getters = {
     rankList: state => state.bookStore.rankList,
     isLoadShow: state => state.bookStore.isLoadShow,
     minorCate: state => state.bookStore.minorCate,
-    isChapterCategoryShow: state => state.bookReader.isChapterCategoryShow,
+    isChapterCatelogueShow: state => state.bookReader.isChapterCatelogueShow,
     currentChapter: state => state.bookReader.currentChapter
 }
 export default getters
