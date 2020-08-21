@@ -37,7 +37,7 @@ export default {
 @import '../assets/styles/global.scss';
 .message-box {
     position: fixed;
-    top:70%;
+    top:60%;
     left:50%;
     transform: translateX(-50%);
     z-index: 106;

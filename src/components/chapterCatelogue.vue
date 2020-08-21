@@ -63,6 +63,7 @@ export default {
                 if (chapterRes.status === 200){
                     this.isLoaded = true
                     this.chapterArr = chapterRes.data.chapters ? chapterRes.data.chapters : ''
+                    this.setChapterList(this.chapterArr)
                 }
             }
             console.log(chapterRes)
@@ -117,7 +118,7 @@ export default {
             overflow: hidden;
             .load-animate-wrap {
                 position: absolute;
-                top:30%;
+                top:0;
                 left:0;
                 width:100%;
                 height: 100%;

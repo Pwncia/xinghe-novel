@@ -81,7 +81,7 @@
                     <span class="icon-heart-full" v-if="isHeartFull"></span>
                     <span class="icon-heart" v-else></span>
                 </div>
-                <span class="icon-community"></span>
+                <!-- <span class="icon-community"></span> -->
                 <span class="icon-more"></span>
             </div>
         </div>
@@ -92,13 +92,13 @@
             <div class="text">加载中...</div>
         </div>
         <div class="footer">
-            <div class="add">
+            <div class="add" @click="addToBookShelf" :class="{added:isAddToBookShelf}">
                 <div class="icon-wrap">
-                    <span class="icon-add"></span>
+                    <span :class="[isAddToBookShelf?'icon-check':'icon-add']"></span>
                 </div>
-                <span>加入书架</span>
+                <span>{{isAddToBookShelf?'已加入':'加入书架'}}</span>
             </div>
-            <div class="read">
+            <div class="read" @click="goReader">
                 <span class="icon-book"></span>
                 <span>免费阅读</span>
             </div>
@@ -123,7 +123,7 @@ import {updatedTime} from '../utils/utils'
 import messageBox from '../components/messageBox'
 import allReviews from '../components/bookdetail/allReview'
 import chapterCatelogue from '../components/chapterCatelogue'
-import {setWantReadList, getWantReadList, deleteWantRead, setChapterLink, getChapterLink} from '../utils/localStorage'
+import {setWantReadList, getWantReadList, deleteWantRead, setChapterLink, getChapterLink, getBookShelfList, setBookShelfList} from '../utils/localStorage'
 import {bookReaderMixin} from '../utils/mixin'
 
 export default {
@@ -142,10 +142,33 @@ export default {
             isHeartFull:'',
             msg:'',
             isAllReviewsShow:false,
-            chapterLink:''
+            chapterLink:'',
+            isAddToBookShelf:false
         }
     },
     methods:{
+        addToBookShelf() {
+            if (this.isAddToBookShelf) {
+                this.msg = '已加入书架'
+                this.$refs.messageBox.show()
+                return false
+            }
+            this.isAddToBookShelf = true
+            setBookShelfList({
+                bookId:this.bookInfo._id,
+                cover:this.bookInfo.cover,
+                title:this.bookInfo.title,
+                isSelected:false
+            })
+        },
+        goReader(){
+            if (!this.chapterLink) {
+                this.chapterLink = this.chapterList[0].link
+                console.log(this.chapterLink)
+                setChapterLink(this.$route.params.bookId, this.chapterLink)
+            }
+            this.$router.push('/bookreader/' + this.$route.params.bookId)
+        },
         goBookReader(link) {
             setChapterLink(this.$route.params.bookId, link)
             this.$router.push('/bookreader/' + this.$route.params.bookId)
@@ -223,6 +246,10 @@ export default {
                 this.score = res.rating.score
                 this.setStarObj()
                 this.updated = updatedTime(this.bookInfo.updated)
+                let bookShelfList = getBookShelfList()
+                if (bookShelfList) {
+                    this.isAddToBookShelf = bookShelfList.some(item => item.bookId === this.bookInfo._id)
+                }
             })
             this.getShortReview().then(res => {
                 this.reviewsObj = res
@@ -571,6 +598,12 @@ export default {
                     padding:px2rem(1);
                     border-radius: 50%;
                     border:px2rem(1.5) solid #ff9900;
+                }
+                &.added {
+                    color:#ccc;
+                    .icon-wrap {
+                        border: px2rem(1.5) solid #ccc;
+                    }
                 }
             }
             .read {

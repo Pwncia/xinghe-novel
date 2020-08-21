@@ -21,12 +21,14 @@ export const bookStoreMixin = {
 export const bookReaderMixin = {
     computed: {
         ...mapGetters([
-            'isChapterCatelogueShow'
+            'isChapterCatelogueShow',
+            'chapterList'
         ])
     },
     methods: {
         ...mapActions([
-            'setIsChapterCatelogueShow'
+            'setIsChapterCatelogueShow',
+            'setChapterList'
         ])
     }
 }

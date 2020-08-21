@@ -61,5 +61,10 @@ export default {
             font-size:px2rem(18);
         }
     }
+    // .progress {
+    //     span:first-child {
+    //         font-size:px2rem(20)
+    //     }
+    // }
 }
 </style>

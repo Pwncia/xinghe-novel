@@ -98,7 +98,7 @@ export default {
     position:absolute;
     bottom:0;
     left: 0;
-    width:px2rem(355);
+    width:calc(100vw - #{px2rem(20)});
     height: px2rem(150);
     margin:px2rem(0) px2rem(10);
     box-sizing:border-box;

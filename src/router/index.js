@@ -5,7 +5,7 @@ Vue.use(VueRouter)
 
 const routes = [{
         path: '/',
-        redirect: '/bookstore'
+        redirect: '/bookrecom'
     },
     {
         path: '/bookstore',
@@ -26,6 +26,11 @@ const routes = [{
         path: '/bookReader/:bookId',
         component: () =>
             import ('../views/bookReader.vue')
+    },
+    {
+        path: '/bookshelf',
+        component: () =>
+            import ('../views/bookShelf.vue')
     }
 ]
 

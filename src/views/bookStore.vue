@@ -17,15 +17,14 @@
             </div>
         </div>
         <male-cat :gender='currentBigCate'  ref="maleCat"></male-cat>
-        <!-- <transition name="slide-left">
-            <book-search :isBookSearchShow="isBookSearchShow" v-show="isBookSearchShow" @hide-book-search="hideBookSearch"></book-search>
-        </transition> -->
+        <!-- <div class="book-shelf-btn">
+            <span class="icon-book-store"></span>
+        </div> -->
     </div>
 </template>
 
 <script>
 import maleCat from '@/components/bookstore/maleCat.vue'
-// import bookSearch from '@/components/bookstore/bookSearch.vue'
 import {bookStoreMixin} from '@/utils/mixin.js'
 export default {
     mixins:[bookStoreMixin],
@@ -47,7 +46,8 @@ export default {
                 {
                     title: '漫画',
                     name:'picture'
-                }],
+                }
+                ],
             currentBigCate:'male',
             currentConIndex:0,
             isBookSearchShow:false
@@ -118,7 +118,7 @@ export default {
 @import '../assets/styles/global.scss';
 .book-store {
     width:100%;
-    height: 100vh;
+    height: calc(100vh - #{px2rem(48)});
     display: flex;
     flex-direction: column;
     .top-nav {
@@ -149,6 +149,21 @@ export default {
             font-weight: 700;
             color:#000;
         }
+    }
+    .book-shelf-btn {
+       @include center; 
+        position: fixed;
+        bottom:px2rem(120);
+        right:px2rem(30);
+        width:px2rem(40);
+        height:px2rem(40);
+        background-color: #fa8e30;
+        font-size:px2rem(20);
+        font-weight: 700;
+        border-radius: 50%;
+        color: #eee;
+        // box-shadow: px2rem(2) px2rem(2) px2rem(2) 0 rgb(200, 200, 200);
+        box-shadow: px2rem(0) px2rem(0) px2rem(4) 0 rgba(10, 10, 10,.5);
     }
 }
 </style>

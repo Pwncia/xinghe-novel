@@ -4,6 +4,7 @@ const getters = {
     isLoadShow: state => state.bookStore.isLoadShow,
     minorCate: state => state.bookStore.minorCate,
     isChapterCatelogueShow: state => state.bookReader.isChapterCatelogueShow,
-    currentChapter: state => state.bookReader.currentChapter
+    currentChapter: state => state.bookReader.currentChapter,
+    chapterList: state => state.bookReader.chapterList
 }
 export default getters

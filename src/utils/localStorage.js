@@ -95,3 +95,18 @@ export function saveReaderSetting(key, value) {
 export function getReaderSetting() {
     return getStorageItem('reader-setting')
 }
+
+//保存书架列表
+export function setBookShelfList(book) {
+    let bookShelfList = getStorageItem('bookshelf')
+    if (!bookShelfList) {
+        bookShelfList = []
+    }
+    bookShelfList.push(book)
+    return setStorageItem('bookshelf', bookShelfList)
+}
+
+//获取书架列表 
+export function getBookShelfList() {
+    return getStorageItem('bookshelf')
+}

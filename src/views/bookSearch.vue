@@ -184,6 +184,7 @@ export default {
     width:100%;
     height: 100vh;
     background-color:#fff;
+    z-index: 100;
     .search-bar {
         display: flex;
         height: px2rem(48);

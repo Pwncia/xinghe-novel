@@ -17,6 +17,9 @@ const actions = {
     },
     setCurrentChapter: ({ commit }, val) => {
         return commit('SET_CURRENTCHAPTER', val)
+    },
+    setChapterList: ({ commit }, val) => {
+        return commit('SET_CHAPTERLIST', val)
     }
 }
 
