@@ -1,6 +1,6 @@
 <template>
     <div class="book-nav">
-        <div class="book-nav-item" :class="{current:currentIndex === index}" v-for="(item,index) in navList" :key="index" @click="handleClick(index, item.route)">
+        <div class="book-nav-item" :class="{current:$route.path === item.route}" v-for="(item,index) in navList" :key="index" @click="handleClick(item.route)">
             <span :class="[item.iconClass]"></span>
             <span>{{item.title}}</span>
         </div>
@@ -11,7 +11,6 @@
 export default {
     data() {
         return {
-            currentIndex:1,
             navList:[
                 {
                     iconClass:'icon-book-shelf',
@@ -37,8 +36,7 @@ export default {
         }
     },
     methods: {
-        handleClick(index, path) {
-            this.currentIndex = index
+        handleClick(path) {
             if (this.$route.path === path) {
                 return false
             }

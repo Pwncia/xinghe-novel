@@ -60,7 +60,6 @@ export default {
         toggleCat(val) {
             this.currentConIndex = val
             this.currentBigCate = this.bookList[val].name
-            console.log(this.currentBigCate)
             this.freshCate()
         },
         goBookSearch() {

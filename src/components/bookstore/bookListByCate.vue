@@ -21,7 +21,7 @@
                     :key="index"
                     @click=goBookDetail(item._id)>
                         <div class="cover">
-                            <img :src="getCoverPath(item.cover)" alt="">
+                            <img v-lazy="getCoverPath(item.cover)" alt="">
                         </div>
                         <div class="book-info">
                             <div class="tittle">{{item.title}}</div>

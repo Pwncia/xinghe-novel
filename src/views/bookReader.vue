@@ -110,7 +110,6 @@ export default {
         onTouchStart(e) {
             if (this.isScrollToBottom) {
                 this.touchStartY = this.touchStartY ? this.touchStartY : e.targetTouches[0].clientY
-                console.log(this.touchStartY)
             }
         },
         onTouchMove(e){
@@ -258,7 +257,6 @@ export default {
                 this.chapterInfo = res.data.chapter
                 this.$refs.renditionScroll.scrollTo(0, 0)
             }
-            console.log(res)
         },
         bookReaderInit(){
             //获取本地阅读器设置

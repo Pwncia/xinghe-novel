@@ -4,7 +4,7 @@
       <div class="book-item-wrap" v-for="(item, index) in bookListData.books"
       :key="index" @click="goBookDetail(item._id)">
           <div class="book-cover">
-              <img :src="getCoverPath(item.cover)">
+              <img v-lazy="getCoverPath(item.cover)">
           </div>
           <div class="book-info-wrap">
               <div class="title">{{index+1+'.'+item.title}}</div>

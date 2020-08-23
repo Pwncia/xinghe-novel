@@ -66,7 +66,6 @@ export default {
                     this.setChapterList(this.chapterArr)
                 }
             }
-            console.log(chapterRes)
         }
     },
     components:{

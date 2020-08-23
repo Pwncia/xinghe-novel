@@ -5,7 +5,7 @@
         @click="handle(item.name)"
         >
             <div class="cover">
-                <img :src="getCoverPath(item)" alt="">
+                <img v-lazy="getCoverPath(item)" alt="">
             </div>
             <div class="info-wrap">
                 <span class="title">{{item.name}}</span>

@@ -9,6 +9,16 @@
     <title>
         <%= htmlWebpackPlugin.options.title %>
     </title>
+    <% if(htmlWebpackPlugin.options.isProd) { %>
+        <script src="https://unpkg.com/vue@2.6.12/dist/vue.min.js"></script>
+        <script src="https://unpkg.com/vue-router@3.4.3/dist/vue-router.min.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
+        <script src="https://unpkg.com/web-storage-cache@1.1.1/dist/web-storage-cache.min.js"></script>
+        <script src="https://unpkg.com/urlencode@1.1.0/lib/urlencode.js"></script>
+        <script src="https://unpkg.com/vue-awesome-swiper@4.1.1/dist/vue-awesome-swiper.js"></script>
+
+        <% } %>
 </head>
 
 <body>

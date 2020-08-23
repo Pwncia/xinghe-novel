@@ -164,7 +164,6 @@ export default {
         goReader(){
             if (!this.chapterLink) {
                 this.chapterLink = this.chapterList[0].link
-                console.log(this.chapterLink)
                 setChapterLink(this.$route.params.bookId, this.chapterLink)
             }
             this.$router.push('/bookreader/' + this.$route.params.bookId)
@@ -238,7 +237,6 @@ export default {
         },
         getBookDetailInit(){
             this.getBookDetail().then(res => {
-                console.log(res)
                 this.isLoaded = true
                 this.isTransparent = true
                 this.bookInfo = res
@@ -253,7 +251,6 @@ export default {
             })
             this.getShortReview().then(res => {
                 this.reviewsObj = res
-                console.log(res)
             })
             let readList = getWantReadList()
             if (readList) {

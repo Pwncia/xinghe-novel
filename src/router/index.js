@@ -8,6 +8,11 @@ const routes = [{
         redirect: '/bookrecom'
     },
     {
+        path: '/bookrecom',
+        component: () =>
+            import ('../views/bookSelection.vue')
+    },
+    {
         path: '/bookstore',
         component: () =>
             import ('../views/bookStore.vue')
@@ -31,6 +36,11 @@ const routes = [{
         path: '/bookshelf',
         component: () =>
             import ('../views/bookShelf.vue')
+    },
+    {
+        path: '/user',
+        component: () =>
+            import ('../views/user.vue')
     }
 ]
 

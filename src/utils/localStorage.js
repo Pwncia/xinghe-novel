@@ -62,7 +62,6 @@ export function getWantReadList() {
 //移除想读书本
 export function deleteWantRead(bookId) {
     let readList = getStorageItem('want-read-list')
-    console.log(readList)
     let newArr = readList.filter(item => item !== bookId)
     return setStorageItem('want-read-list', newArr)
 }
@@ -108,5 +107,11 @@ export function setBookShelfList(book) {
 
 //获取书架列表 
 export function getBookShelfList() {
-    return getStorageItem('bookshelf')
+    let booklist = getStorageItem('bookshelf')
+    return booklist || ''
+}
+
+//删除书加列表
+export function deleteBookShelfList() {
+    return removeStorageItem('bookshelf')
 }

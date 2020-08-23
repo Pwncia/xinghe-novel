@@ -5,7 +5,7 @@
                 <div class="reslist-item" v-for="(item, index) in bookList" :key="index"
                 @click="goBookDetail(item._id)">
                     <div class="cover">
-                        <img :src="getCoverPath(item.cover)" alt="">
+                        <img v-lazy="getCoverPath(item.cover)" alt="">
                     </div>
                     <div class="info">
                         <div class="title" v-html="searchBright(item.title,item.highlight.title)"></div>

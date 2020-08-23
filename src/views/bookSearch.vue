@@ -83,7 +83,6 @@ export default {
             if (res.status === 200) {
                 this.searchResList = res.data.books
             }
-            console.log(res)
             this.isSearching = false
         },
         async getAutoComplete() {
@@ -95,7 +94,6 @@ export default {
             if (res.status === 200) {
                 this.autoCompWords = res.data.keywords
             }
-            console.log(res)
         },
         //清空搜索框
         deleteSearchWord() {

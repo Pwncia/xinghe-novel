@@ -111,9 +111,7 @@ export default {
                  this.cateBookData = res.data
                 }
             }
-            this.pullFlag = false  
-            console.log(this.cateBookData)
-            console.log(res)
+            this.pullFlag = false
         },
         //更改请求参数并重新请求小说列表
         queryBookList(mins, type) {
